@@ -53,7 +53,7 @@
 #include "SystemPackets.h"
 #include "QueryHolder.h"
 #include "World.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 

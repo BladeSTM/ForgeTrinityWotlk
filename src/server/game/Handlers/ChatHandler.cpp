@@ -39,7 +39,7 @@
 #include "ScriptMgr.h"
 #include "SpellAuraEffects.h"
 #include "Util.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "Warden.h"
@@ -293,8 +293,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 return;
             }
 
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if (!e->OnChat(sender, type, lang, msg))
                     return;
 #endif
@@ -314,8 +314,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 return;
             }
 
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if (!e->OnChat(sender, type, LANG_UNIVERSAL, msg))
                     return;
 #endif
@@ -335,8 +335,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 return;
             }
 
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if (!e->OnChat(sender, type, lang, msg))
                     return;
 #endif
@@ -387,8 +387,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 (HasPermission(rbac::RBAC_PERM_CAN_FILTER_WHISPERS) && !sender->isAcceptWhispers() && !sender->IsInWhisperWhiteList(receiver->GetGUID())))
                 sender->AddWhisperWhiteList(receiver->GetGUID());
 
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if (!e->OnChat(GetPlayer(), type, lang, msg, receiver))
                     return;
 #endif
@@ -417,8 +417,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             type = group->IsLeader(sender->GetGUID()) ? CHAT_MSG_PARTY_LEADER : CHAT_MSG_PARTY;
 
             sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, group);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg, group))
                     return;
 #endif
@@ -435,8 +435,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 if (Guild* guild = sGuildMgr->GetGuildById(GetPlayer()->GetGuildId()))
                 {
                     sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, guild);
-#ifdef ELUNA
-                    if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+                    if (Forge* e = sWorld->GetForge())
                         if(!e->OnChat(sender, type, lang, msg, guild))
                             return;
 #endif
@@ -453,8 +453,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 if (Guild* guild = sGuildMgr->GetGuildById(GetPlayer()->GetGuildId()))
                 {
                     sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, guild);
-#ifdef ELUNA
-                    if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+                    if (Forge* e = sWorld->GetForge())
                         if(!e->OnChat(sender, type, lang, msg, guild))
                             return;
 #endif
@@ -476,8 +476,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             }
 
             sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, group);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg, group))
                     return;
 #endif
@@ -499,8 +499,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             }
 
             sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, group);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg, group))
                     return;
 #endif
@@ -517,8 +517,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 return;
 
             sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, group);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg, group))
                     return;
 #endif
@@ -537,8 +537,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 return;
 
             sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, group);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg, group))
                     return;
 #endif
@@ -556,8 +556,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 return;
 
             sScriptMgr->OnPlayerChat(GetPlayer(), type, lang, msg, group);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg, group))
                     return;
 #endif
@@ -581,8 +581,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             if (Channel* chn = ChannelMgr::GetChannelForPlayerByNamePart(channel, sender))
             {
                 sScriptMgr->OnPlayerChat(sender, type, lang, msg, chn);
-#ifdef ELUNA
-                if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+                if (Forge* e = sWorld->GetForge())
                     if(!e->OnChat(sender, type, lang, msg, chn))
                         return;
 #endif
@@ -612,8 +612,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
                 }
 
                 sScriptMgr->OnPlayerChat(sender, type, lang, msg);
-#ifdef ELUNA
-                if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+                if (Forge* e = sWorld->GetForge())
                     if(!e->OnChat(sender, type, lang, msg))
                         return;
 #endif
@@ -640,8 +640,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recvData)
             }
 
             sScriptMgr->OnPlayerChat(sender, type, lang, msg);
-#ifdef ELUNA
-            if (Eluna* e = sWorld->GetEluna())
+#ifdef FORGE
+            if (Forge* e = sWorld->GetForge())
                 if(!e->OnChat(sender, type, lang, msg))
                     return;
 #endif

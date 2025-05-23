@@ -41,7 +41,7 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 
@@ -219,8 +219,8 @@ bool Group::Create(Player* leader)
     else if (!AddMember(leader))
         return false;
 
-#ifdef ELUNA
-    if (Eluna* e = leader->GetEluna())
+#ifdef FORGE
+    if (Forge* e = leader->GetForge())
         e->OnCreate(this, m_leaderGuid, m_groupType);
 #endif
 

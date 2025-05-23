@@ -35,8 +35,8 @@
 #include <map>
 #include <unordered_map>
 
-#ifdef ELUNA
-class Eluna;
+#ifdef FORGE
+class Forge;
 #endif
 class Player;
 class WorldPacket;
@@ -773,9 +773,9 @@ class TC_GAME_API World
         bool IsGuidWarning() { return _guidWarn; }
         bool IsGuidAlert() { return _guidAlert; }
 
-#ifdef ELUNA
-        Eluna* GetEluna() const { return eluna.get(); }
-        std::unique_ptr<Eluna> eluna;
+#ifdef FORGE
+        Forge* GetForge() const { return forge.get(); }
+        std::unique_ptr<Forge> forge;
 #endif
     protected:
         void _UpdateGameTime();

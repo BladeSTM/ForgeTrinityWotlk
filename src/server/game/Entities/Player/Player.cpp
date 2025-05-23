@@ -105,7 +105,7 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "WorldStatePackets.h"
@@ -740,8 +740,8 @@ uint32 Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
 
         UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DEATHS_FROM, 1, type);
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnPlayerKilledByEnvironment(this, type);
 #endif
     }
@@ -3441,8 +3441,8 @@ void Player::LearnSpell(uint32 spell_id, bool dependent, uint32 fromSkill /*= 0*
         data << uint16(0);
         SendDirectMessage(&data);
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnLearnSpell(this, spell_id);
 #endif
     }
@@ -4476,8 +4476,8 @@ void Player::ResurrectPlayer(float restore_percent, bool applySickness)
     // recast lost by death auras of any items held in the inventory
     CastAllObtainSpells();
 
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
         e->OnResurrect(this);
 #endif
     if (!applySickness)
@@ -5682,8 +5682,8 @@ bool Player::UpdateSkillPro(uint16 SkillId, int32 Chance, uint32 step)
                 break;
             }
         }
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnSkillChange(this, SkillId, new_value);
 #endif
         UpdateSkillEnchantments(SkillId, SkillValue, new_value);
@@ -6318,8 +6318,8 @@ void Player::CheckAreaExploreAndOutdoor()
 
     if (!(currFields & val))
     {
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnDiscoverArea(this, GetAreaId());
 #endif
         SetUInt32Value(PLAYER_EXPLORED_ZONES_1 + offset, (uint32)(currFields | val));
@@ -6878,7 +6878,7 @@ uint32 Player::GetZoneIdFromDB(ObjectGuid guid)
 
 void Player::UpdateArea(uint32 newArea)
 {
-#ifdef ELUNA
+#ifdef FORGE
     uint32 oldArea = m_areaUpdateId;
 #endif
     // FFA_PVP flags are area and not zone id dependent
@@ -6914,9 +6914,9 @@ void Player::UpdateArea(uint32 newArea)
     else
         RemoveRestFlag(REST_FLAG_IN_FACTION_AREA);
 
-#ifdef ELUNA
+#ifdef FORGE
     // We only want the hook to trigger when the old and new area is actually different
-    if (Eluna* e = GetEluna())
+    if (Forge* e = GetForge())
         if(oldArea != newArea)
             e->OnUpdateArea(this, oldArea, newArea);
 #endif
@@ -11677,8 +11677,8 @@ InventoryResult Player::CanUseItem(ItemTemplate const* proto) const
         if (HasSpell(proto->Spells[1].SpellId))
             return EQUIP_ERR_NONE;
 
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
     {
         InventoryResult eres = e->OnCanUseItem(this, proto->ItemId);
         if (eres != EQUIP_ERR_OK)
@@ -11866,8 +11866,8 @@ Item* Player::StoreNewItem(ItemPosCountVec const& dest, uint32 item, bool update
             CharacterDatabase.Execute(stmt);
         }
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnAdd(this, pItem);
 #endif
     }
@@ -12114,8 +12114,8 @@ Item* Player::EquipItem(uint16 pos, Item* pItem, bool update)
 
         ApplyEquipCooldown(pItem2);
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
         {
             e->OnEquip(this, pItem2, bag, slot); // This should be removed in the future
             e->OnItemEquip(this, pItem2, slot);
@@ -12131,8 +12131,8 @@ Item* Player::EquipItem(uint16 pos, Item* pItem, bool update)
     UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EQUIP_ITEM, pItem->GetEntry());
     UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EQUIP_EPIC_ITEM, slot, pItem->GetEntry());
 
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
     {
         e->OnEquip(this, pItem, bag, slot); // This should be removed in the future
         e->OnItemEquip(this, pItem, slot);
@@ -12163,8 +12163,8 @@ void Player::QuickEquipItem(uint16 pos, Item* pItem)
         UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EQUIP_ITEM, pItem->GetEntry());
         UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EQUIP_EPIC_ITEM, slot, pItem->GetEntry());
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
         {
             e->OnEquip(this, pItem, (pos >> 8), slot); // This should be removed in the future
             e->OnItemEquip(this, pItem, slot);
@@ -12278,8 +12278,8 @@ void Player::RemoveItem(uint8 bag, uint8 slot, bool update)
                         default:
                             break;
                     }
-#ifdef ELUNA
-                    if (Eluna* e = GetEluna())
+#ifdef FORGE
+                    if (Forge* e = GetForge())
                         e->OnItemUnEquip(this, pItem, slot);
 #endif
                 }
@@ -12421,8 +12421,8 @@ void Player::DestroyItem(uint8 bag, uint8 slot, bool update)
 
                 // equipment visual show
                 SetVisibleItemSlot(slot, nullptr);
-#ifdef ELUNA
-                if (Eluna* e = GetEluna())
+#ifdef FORGE
+                if (Forge* e = GetForge())
                     e->OnItemUnEquip(this, pItem, slot);
 #endif
             }
@@ -14841,8 +14841,8 @@ void Player::AddQuestAndCheckCompletion(Quest const* quest, Object* questGiver)
         case TYPEID_UNIT:
             PlayerTalkClass->ClearMenus();
 
-#ifdef ELUNA
-            if (Eluna* e = GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetForge())
                 e->OnQuestAccept(this, questGiver->ToCreature(), quest);
 #endif
             questGiver->ToCreature()->AI()->OnQuestAccept(this, quest);
@@ -14879,8 +14879,8 @@ void Player::AddQuestAndCheckCompletion(Quest const* quest, Object* questGiver)
         case TYPEID_GAMEOBJECT:
             PlayerTalkClass->ClearMenus();
 
-#ifdef ELUNA
-            if (Eluna* e = GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetForge())
                 e->OnQuestAccept(this, questGiver->ToGameObject(), quest);
 #endif
             questGiver->ToGameObject()->AI()->OnQuestAccept(this, quest);
@@ -16005,8 +16005,8 @@ QuestGiverStatus Player::GetQuestDialogStatus(Object* questgiver)
     {
         case TYPEID_GAMEOBJECT:
         {
-#ifdef ELUNA
-            if (Eluna* e = GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetForge())
                 e->GetDialogStatus(this, questgiver->ToGameObject());
 #endif
             if (auto ai = questgiver->ToGameObject()->AI())
@@ -16018,8 +16018,8 @@ QuestGiverStatus Player::GetQuestDialogStatus(Object* questgiver)
         }
         case TYPEID_UNIT:
         {
-#ifdef ELUNA
-            if (Eluna* e = GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetForge())
                 e->GetDialogStatus(this, questgiver->ToCreature());
 #endif
             if (auto ai = questgiver->ToCreature()->AI())
@@ -24863,8 +24863,8 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
         if (loot->containerID > 0)
             sLootItemStorage->RemoveStoredLootItemForContainer(loot->containerID, item->itemid, item->count, item->itemIndex);
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnLootItem(this, newitem, item->count, this->GetLootGUID());
 #endif
     }
@@ -25282,8 +25282,8 @@ bool Player::LearnTalent(uint32 talentId, uint32 talentRank)
 
     // update free talent points
     SetFreeTalentPoints(CurTalentPoints - (talentRank - curtalent_maxrank + 1));
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
         e->OnLearnTalents(this, talentId, talentRank, spellid);
 #endif
 

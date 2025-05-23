@@ -69,7 +69,7 @@ target_link_libraries(common
     short_alloc)
 
 
-if (ELUNA)
+if (FORGE)
   target_link_libraries(common
     PUBLIC
       lualib)

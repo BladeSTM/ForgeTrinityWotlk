@@ -42,7 +42,7 @@
 #include "WorldPacket.h"
 #include "WorldStatePackets.h"
 #include <cstdarg>
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 
@@ -142,9 +142,9 @@ Battleground::Battleground()
 
 Battleground::~Battleground()
 {
-#ifdef ELUNA
+#ifdef FORGE
     if(m_Map)
-        if (Eluna* e = m_Map->GetEluna())
+        if (Forge* e = m_Map->GetForge())
             e->OnBGDestroy(this, GetTypeID(), GetInstanceID());
 #endif
 
@@ -467,8 +467,8 @@ inline void Battleground::_ProcessJoin(uint32 diff)
 
         StartingEventOpenDoors();
 
-#ifdef ELUNA
-        if (Eluna* e = GetBgMap()->GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetBgMap()->GetForge())
             e->OnBGStart(this, GetTypeID(), GetInstanceID());
 #endif
 
@@ -830,9 +830,9 @@ void Battleground::EndBattleground(uint32 winner)
 
         player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_COMPLETE_BATTLEGROUND, player->GetMapId());
     }
-#ifdef ELUNA
+#ifdef FORGE
     //the type of the winner,change Team to BattlegroundTeamId,it could be better.
-    if (Eluna* e = GetBgMap()->GetEluna())
+    if (Forge* e = GetBgMap()->GetForge())
         e->OnBGEnd(this, GetTypeID(), GetInstanceID(), Team(winner));
 #endif
 }

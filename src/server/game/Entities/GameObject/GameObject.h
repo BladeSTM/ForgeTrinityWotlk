@@ -24,9 +24,9 @@
 #include "Loot.h"
 #include "MapObject.h"
 #include "SharedDefines.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
-#include "ElunaEventMgr.h"
+#include "ForgeEventMgr.h"
 #endif
 
 class GameObjectAI;

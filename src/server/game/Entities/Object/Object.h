@@ -36,7 +36,7 @@
 #include <list>
 #include <set>
 #include <unordered_map>
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaValue.h"
 #endif
 
@@ -60,9 +60,9 @@ class UpdateData;
 class WorldObject;
 class WorldPacket;
 class ZoneScript;
-#ifdef ELUNA
-class ElunaEventProcessor;
-class Eluna;
+#ifdef FORGE
+class ForgeEventProcessor;
+class Forge;
 #endif
 struct FactionTemplateEntry;
 struct QuaternionData;
@@ -567,10 +567,10 @@ class TC_GAME_API WorldObject : public Object, public WorldLocation
 
         uint32  LastUsedScriptID;
 
-#ifdef ELUNA
-        std::unique_ptr <ElunaEventProcessor> elunaEvents;
+#ifdef FORGE
+        std::unique_ptr <ForgeEventProcessor> forgeEvents;
 
-        Eluna* GetEluna() const;
+        Forge* GetForge() const;
 
         LuaVal lua_data = LuaVal({});
 #endif

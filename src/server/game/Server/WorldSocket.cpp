@@ -29,7 +29,7 @@
 #include "RBAC.h"
 #include "Realm.h"
 #include "ScriptMgr.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "World.h"

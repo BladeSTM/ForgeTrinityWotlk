@@ -41,7 +41,7 @@
 #include "Unit.h"
 #include "Util.h"
 #include "Vehicle.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "WorldPacket.h"
@@ -5044,10 +5044,10 @@ void AuraEffect::HandlePeriodicTriggerSpellAuraTick(Unit* target, Unit* caster) 
     {
         if (Unit* triggerCaster = triggeredSpellInfo->NeedsToBeTriggeredByCaster(m_spellInfo) ? caster : target)
         {
-#ifdef ELUNA
+#ifdef FORGE
             Creature* c = target->ToCreature();
             if (c && caster)
-                if(Eluna * e = caster->GetEluna())
+                if(Forge * e = caster->GetForge())
                     e->OnDummyEffect(triggerCaster, GetId(), SpellEffIndex(GetEffIndex()), c);
 #endif
             triggerCaster->CastSpell(target, triggerSpellId, this);

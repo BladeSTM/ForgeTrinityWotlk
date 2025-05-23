@@ -44,7 +44,7 @@
 #include "Pet.h"
 #include "Player.h"
 #include "ReputationMgr.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "ScriptMgr.h"
@@ -716,8 +716,8 @@ void Spell::EffectDummy()
     // normal DB scripted effect
     TC_LOG_DEBUG("spells", "Spell ScriptStart spellid {} in EffectDummy({})", m_spellInfo->Id, uint32(effectInfo->EffectIndex));
     m_caster->GetMap()->ScriptsStart(sSpellScripts, uint32(m_spellInfo->Id | (effectInfo->EffectIndex << 24)), m_caster, unitTarget);
-#ifdef ELUNA
-    if (Eluna* e = m_caster->GetEluna())
+#ifdef FORGE
+    if (Forge* e = m_caster->GetForge())
     {
         if (gameObjTarget)
             e->OnDummyEffect(m_caster, m_spellInfo->Id, effectInfo->EffectIndex, gameObjTarget);
@@ -1748,8 +1748,8 @@ void Spell::SendLoot(ObjectGuid guid, LootType loottype)
         }
 
         player->PlayerTalkClass->ClearMenus();
-#ifdef ELUNA
-        if (Eluna* e = player->GetEluna())
+#ifdef FORGE
+        if (Forge* e = player->GetForge())
         {
             if (e->OnGossipHello(player, gameObjTarget))
                 return;

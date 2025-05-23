@@ -36,9 +36,9 @@
 #include "Opcodes.h"
 #include "ScriptMgr.h"
 #include <numeric>
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
-#include "ElunaConfig.h"
+#include "ForgeConfig.h"
 #endif
 
 MapManager::MapManager()
@@ -55,11 +55,11 @@ void MapManager::Initialize()
     Map::InitStateMachine();
 
     int num_threads(sWorld->getIntConfig(CONFIG_NUMTHREADS));
-#if ELUNA
-    if (sElunaConfig->IsElunaEnabled() && sElunaConfig->IsElunaCompatibilityMode() && num_threads > 1)
+#if FORGE
+    if (sForgeConfig->IsForgeEnabled() && sForgeConfig->IsForgeCompatibilityMode() && num_threads > 1)
     {
-        // Force 1 thread for Eluna if compatibility mode is enabled. Compatibility mode is single state and does not allow more update threads.
-        TC_LOG_ERROR("maps", "Map update threads set to {}, when Eluna in compatibility mode only allows 1, changing to 1", num_threads);
+        // Force 1 thread for Forge if compatibility mode is enabled. Compatibility mode is single state and does not allow more update threads.
+        TC_LOG_ERROR("maps", "Map update threads set to {}, when Forge in compatibility mode only allows 1, changing to 1", num_threads);
         num_threads = 1;
     }
 #endif
@@ -381,15 +381,15 @@ void MapManager::FreeInstanceId(uint32 instanceId)
     // If freed instance id is lower than the next id available for new instances, use the freed one instead
     _nextInstanceId = std::min(instanceId, _nextInstanceId);
     _freeInstanceIds[instanceId] = true;
-#ifdef ELUNA
+#ifdef FORGE
     for (MapMapType::iterator itr = i_maps.begin(); itr != i_maps.end(); ++itr)
     {
         if (!(*itr).second->Instanceable())
             continue;
 
         Map* iMap = (*itr).second->ToMapInstanced()->FindInstanceMap(instanceId);
-        if (iMap && iMap->GetEluna())
-            iMap->GetEluna()->FreeInstanceId(instanceId);
+        if (iMap && iMap->GetForge())
+            iMap->GetForge()->FreeInstanceId(instanceId);
     }
 #endif
 }

@@ -21,7 +21,7 @@
 #include "Unit.h"
 #include "CreatureAI.h"
 #include "Player.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 
@@ -78,17 +78,17 @@ void CombatReference::EndCombat()
     bool const needSecondAI = second->GetCombatManager().UpdateOwnerCombatState();
 
     // ...and if that happened, also notify the AI of it...
-#ifdef ELUNA
+#ifdef FORGE
     if (needFirstAI)
     {
         if (Player* player = first->ToPlayer())
-            if (Eluna* e = first->GetEluna())
+            if (Forge* e = first->GetForge())
                 e->OnPlayerLeaveCombat(player);
     }
     if (needSecondAI)
     {
         if (Player* player = second->ToPlayer())
-            if (Eluna* e = second->GetEluna())
+            if (Forge* e = second->GetForge())
                 e->OnPlayerLeaveCombat(player);
     }
 #endif
@@ -128,9 +128,9 @@ void CombatReference::SuppressFor(Unit* who)
     Suppress(who);
     if (who->GetCombatManager().UpdateOwnerCombatState())
     {
-#ifdef ELUNA
+#ifdef FORGE
         if (Player* player = who->ToPlayer())
-            if (Eluna* e = player->GetEluna())
+            if (Forge* e = player->GetForge())
                 e->OnPlayerLeaveCombat(player);
 #endif
         if (UnitAI* ai = who->GetAI())
@@ -326,9 +326,9 @@ void CombatManager::SuppressPvPCombat()
         pair.second->Suppress(_owner);
     if (UpdateOwnerCombatState())
     {
-#ifdef ELUNA
+#ifdef FORGE
         if (Player* player = _owner->ToPlayer())
-            if (Eluna* e = player->GetEluna())
+            if (Forge* e = player->GetForge())
                 e->OnPlayerLeaveCombat(player);
 #endif
         if (UnitAI* ownerAI = _owner->GetAI())
@@ -382,9 +382,9 @@ void CombatManager::EndAllPvPCombat()
 
 /*static*/ void CombatManager::NotifyAICombat(Unit* me, Unit* other)
 {
-#ifdef ELUNA
+#ifdef FORGE
     if (Player* player = me->ToPlayer())
-        if (Eluna* e = player->GetEluna())
+        if (Forge* e = player->GetForge())
             e->OnPlayerEnterCombat(player, other);
 #endif
     if (UnitAI* ai = me->GetAI())

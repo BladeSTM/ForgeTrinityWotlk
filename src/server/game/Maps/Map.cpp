@@ -46,10 +46,10 @@
 #include "Transport.h"
 #include "Vehicle.h"
 #include "VMapFactory.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
-#include "ElunaConfig.h"
-#include "ElunaLoader.h"
+#include "ForgeConfig.h"
+#include "ForgeLoader.h"
 #endif
 #include "VMapManager2.h"
 #include "Weather.h"
@@ -285,13 +285,13 @@ i_gridExpiry(expiry),
 i_scriptLock(false), _respawnTimes(std::make_unique<RespawnListContainer>()), _respawnCheckTimer(0)
 {
     m_parentMap = (_parent ? _parent : this);
-#ifdef ELUNA
+#ifdef FORGE
     // lua state begins uninitialized
-    eluna = nullptr;
+    forge = nullptr;
 
-    if (sElunaConfig->IsElunaEnabled() && !sElunaConfig->IsElunaCompatibilityMode() && sElunaConfig->ShouldMapLoadEluna(id))
+    if (sForgeConfig->IsForgeEnabled() && !sForgeConfig->IsForgeCompatibilityMode() && sForgeConfig->ShouldMapLoadForge(id))
         if (!IsParentMap() || (IsParentMap() && !Instanceable()))
-            eluna = std::make_unique<Eluna>(this);
+            forge = std::make_unique<Forge>(this);
 #endif
     for (unsigned int idx=0; idx < MAX_NUMBER_OF_GRIDS; ++idx)
     {
@@ -3575,8 +3575,8 @@ void Map::AddObjectToRemoveList(WorldObject* obj)
 {
     ASSERT(obj->GetMapId() == GetId() && obj->GetInstanceId() == GetInstanceId());
 
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
     {
         if (Creature* creature = obj->ToCreature())
             e->OnRemove(creature);
@@ -4055,19 +4055,19 @@ void InstanceMap::CreateInstanceData(bool load)
     if (i_data != nullptr)
         return;
 
-    bool isElunaAI = false;
+    bool isForgeAI = false;
 
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
     {
         i_data = e->GetInstanceData(this);
         if (i_data)
-            isElunaAI = true;
+            isForgeAI = true;
     }
 #endif
 
-    // if Eluna AI was fetched succesfully we should not call CreateInstanceData nor set the unused scriptID
-    if (!isElunaAI)
+    // if Forge AI was fetched succesfully we should not call CreateInstanceData nor set the unused scriptID
+    if (!isForgeAI)
     {
         InstanceTemplate const* mInstance = sObjectMgr->GetInstanceTemplate(GetId());
         if (mInstance)
@@ -4095,7 +4095,7 @@ void InstanceMap::CreateInstanceData(bool load)
             i_data->SetCompletedEncountersMask(fields[1].GetUInt32());
             if (!data.empty())
             {
-                TC_LOG_DEBUG("maps", "Loading instance data for `{}` with id {}", isElunaAI ? "ElunaAI" : sObjectMgr->GetScriptName(i_script_id), i_InstanceId);
+                TC_LOG_DEBUG("maps", "Loading instance data for `{}` with id {}", isForgeAI ? "ForgeAI" : sObjectMgr->GetScriptName(i_script_id), i_InstanceId);
                 i_data->Load(data.c_str());
             }
         }
@@ -4891,13 +4891,13 @@ std::string InstanceMap::GetDebugInfo() const
     return sstr.str();
 }
 
-#ifdef ELUNA
-Eluna *Map::GetEluna() const
+#ifdef FORGE
+Forge *Map::GetForge() const
 {
-    if(sElunaConfig->IsElunaCompatibilityMode())
-        return sWorld->GetEluna();
+    if(sForgeConfig->IsForgeCompatibilityMode())
+        return sWorld->GetForge();
 
-    return eluna.get();
+    return forge.get();
 }
 #endif
 

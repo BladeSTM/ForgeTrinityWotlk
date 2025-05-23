@@ -45,7 +45,7 @@
 #include "Player.h"
 #include "ScriptMgr.h"
 #include "Spell.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "SpellInfo.h"
@@ -77,8 +77,8 @@ void WorldSession::HandleRepopRequest(WorldPackets::Misc::RepopRequest& /*packet
         GetPlayer()->KillPlayer();
     }
 
-#ifdef ELUNA
-    if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetPlayer()->GetForge())
         e->OnRepop(GetPlayer());
 #endif
 
@@ -176,8 +176,8 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket& recvData)
         if (unit)
         {
 
-#ifdef ELUNA
-            if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetPlayer()->GetForge())
                 if (!e->OnGossipSelectCode(_player, unit, _player->PlayerTalkClass->GetGossipOptionSender(gossipListId), _player->PlayerTalkClass->GetGossipOptionAction(gossipListId), code.c_str()))
 #endif
             if (!unit->AI()->OnGossipSelectCode(_player, menuId, gossipListId, code.c_str()))
@@ -193,8 +193,8 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket& recvData)
         }
         else
         {
-#ifdef ELUNA
-            if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetPlayer()->GetForge())
                 if (!e->OnGossipSelectCode(_player, go, _player->PlayerTalkClass->GetGossipOptionSender(gossipListId), _player->PlayerTalkClass->GetGossipOptionAction(gossipListId), code.c_str()))
 #endif
             if (!go->AI()->OnGossipSelectCode(_player, menuId, gossipListId, code.c_str()))
@@ -205,8 +205,8 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket& recvData)
     {
         if (unit)
         {
-#ifdef ELUNA
-            if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetPlayer()->GetForge())
                 if (!e->OnGossipSelect(_player, unit, _player->PlayerTalkClass->GetGossipOptionSender(gossipListId), _player->PlayerTalkClass->GetGossipOptionAction(gossipListId)))
 #endif
             if (!unit->AI()->OnGossipSelect(_player, menuId, gossipListId))
@@ -222,8 +222,8 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket& recvData)
         }
         else
         {
-#ifdef ELUNA
-            if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetPlayer()->GetForge())
                 if (!e->OnGossipSelect(_player, go, _player->PlayerTalkClass->GetGossipOptionSender(gossipListId), _player->PlayerTalkClass->GetGossipOptionAction(gossipListId)))
 #endif
             if (!go->AI()->OnGossipSelect(_player, menuId, gossipListId))

@@ -86,10 +86,10 @@
 #include "WardenCheckMgr.h"
 #include "WaypointManager.h"
 #include "WeatherMgr.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
-#include "ElunaLoader.h"
-#include "ElunaConfig.h"
+#include "ForgeLoader.h"
+#include "ForgeConfig.h"
 #endif
 #include "WhoListStorage.h"
 #include "WorldSession.h"
@@ -1612,21 +1612,21 @@ void World::SetInitialWorldSettings()
         exit(1);
     }
 
-#ifdef ELUNA
+#ifdef FORGE
     ///- Initialize Lua Engine
-    TC_LOG_INFO("server.loading", "Loading Eluna config...");
-    sElunaConfig->Initialize();
+    TC_LOG_INFO("server.loading", "Loading Forge config...");
+    sForgeConfig->Initialize();
 
     ///- Initialize Lua Engine
-    if (sElunaConfig->IsElunaEnabled())
+    if (sForgeConfig->IsForgeEnabled())
     {
         TC_LOG_INFO("server.loading", "Loading Lua scripts...");
-        sElunaLoader->LoadScripts();
+        sForgeLoader->LoadScripts();
 
-        if (sElunaConfig->GetConfig(CONFIG_ELUNA_SCRIPT_RELOADER))
+        if (sForgeConfig->GetConfig(CONFIG_FORGE_SCRIPT_RELOADER))
         {
-            TC_LOG_INFO("server.loading", "Loading Eluna script reloader...");
-            sElunaLoader->InitializeFileWatcher();
+            TC_LOG_INFO("server.loading", "Loading Forge script reloader...");
+            sForgeLoader->InitializeFileWatcher();
         }
     }
 #endif
@@ -2118,11 +2118,11 @@ void World::SetInitialWorldSettings()
     TC_LOG_INFO("server.loading", "Loading Creature Text Locales...");
     sCreatureTextMgr->LoadCreatureTextLocales();
 
-#ifdef ELUNA
-    if (sElunaConfig->IsElunaEnabled())
+#ifdef FORGE
+    if (sForgeConfig->IsForgeEnabled())
     {
-        TC_LOG_INFO("server.loading", "Starting Eluna world state...");
-        eluna = std::make_unique<Eluna>(nullptr, sElunaConfig->IsElunaCompatibilityMode());
+        TC_LOG_INFO("server.loading", "Starting Forge world state...");
+        forge = std::make_unique<Forge>(nullptr, sForgeConfig->IsForgeCompatibilityMode());
     }
 #endif
 
@@ -2260,9 +2260,9 @@ void World::SetInitialWorldSettings()
     TC_LOG_INFO("server.loading", "Calculate guild limitation(s) reset time...");
     InitGuildResetTime();
 
-#ifdef ELUNA
-    if(GetEluna())
-        GetEluna()->OnConfigLoad(false); // Must be done after Eluna is initialized and scripts have run.
+#ifdef FORGE
+    if(GetForge())
+        GetForge()->OnConfigLoad(false); // Must be done after Forge is initialized and scripts have run.
 #endif
 
     // Preload all cells, if required for the base maps

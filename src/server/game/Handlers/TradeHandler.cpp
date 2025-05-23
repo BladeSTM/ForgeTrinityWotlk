@@ -30,7 +30,7 @@
 #include "TradeData.h"
 #include "World.h"
 #include "WorldPacket.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 
@@ -353,8 +353,8 @@ void WorldSession::HandleAcceptTradeOpcode(WorldPacket& /*recvPacket*/)
         }
     }
 
-#ifdef ELUNA
-    if (Eluna* e = _player->GetEluna())
+#ifdef FORGE
+    if (Forge* e = _player->GetForge())
     {
         if (!e->OnTradeAccept(_player, trader))
         {
@@ -707,8 +707,8 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
         return;
     }
 
-#ifdef ELUNA
-    if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetPlayer()->GetForge())
     {
         if (!e->OnTradeInit(GetPlayer(), pOther))
         {

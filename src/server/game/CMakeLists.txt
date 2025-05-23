@@ -9,19 +9,19 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-# Initialize a variable to hold Eluna directories to exclude
-set(ELUNA_EXCLUDE_DIRS)
+# Initialize a variable to hold Forge directories to exclude
+set(FORGE_EXCLUDE_DIRS)
 
 # Exclude files in the LuaEngine directory for Mangos, CMangos and VMangos
-# or the entire directory if Eluna is disabled
-if(ELUNA)
-  list(APPEND ELUNA_EXCLUDE_DIRS
+# or the entire directory if Forge is disabled
+if(FORGE)
+  list(APPEND FORGE_EXCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/LuaEngine/methods/Mangos
     ${CMAKE_CURRENT_SOURCE_DIR}/LuaEngine/methods/CMangos
     ${CMAKE_CURRENT_SOURCE_DIR}/LuaEngine/methods/VMangos
     )
 else()
-  list(APPEND ELUNA_EXCLUDE_DIRS
+  list(APPEND FORGE_EXCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/LuaEngine
     )
 endif()
@@ -31,7 +31,7 @@ CollectSourceFiles(
   PRIVATE_SOURCES
   # Exclude
   ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders
-  ${ELUNA_EXCLUDE_DIRS})
+  ${FORGE_EXCLUDE_DIRS})
 
 if(USE_COREPCH)
   set(PRIVATE_PCH_HEADER PrecompiledHeaders/gamePCH.h)
@@ -44,7 +44,7 @@ CollectIncludeDirectories(
   PUBLIC_INCLUDES
   # Exclude
   ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders
-  ${ELUNA_EXCLUDE_DIRS})
+  ${FORGE_EXCLUDE_DIRS})
 
 # Provide an interface target for the game project to allow
 # dependent projects to build meanwhile.
@@ -104,7 +104,7 @@ if(USE_COREPCH)
   add_cxx_pch(game ${PRIVATE_PCH_HEADER})
 endif()
 
-if(ELUNA)
+if(FORGE)
   if(WIN32)
     if (MSVC)
       add_custom_command(TARGET game

@@ -82,9 +82,9 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
-#include "ElunaEventMgr.h"
+#include "ForgeEventMgr.h"
 #endif
 #include <cmath>
 
@@ -437,9 +437,9 @@ Unit::~Unit()
 
 void Unit::Update(uint32 p_time)
 {
-#ifdef ELUNA
-    if(elunaEvents) // can be null on maps without eluna
-        elunaEvents->Update(p_time);
+#ifdef FORGE
+    if(forgeEvents) // can be null on maps without forge
+        forgeEvents->Update(p_time);
 #endif
 
     // WARNING! Order of execution here is important, do not change.

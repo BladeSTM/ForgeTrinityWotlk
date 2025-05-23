@@ -69,7 +69,7 @@ class DBCStorage : public DBCStorageBase
         T const* LookupEntry(uint32 id) const { return (id >= _indexTableSize) ? nullptr : _indexTable.AsT[id]; }
         T const* AssertEntry(uint32 id) const { return ASSERT_NOTNULL(LookupEntry(id)); }
 
-#ifdef ELUNA
+#ifdef FORGE
         void SetEntry(uint32 id, T* t)
         {
             if (id >= _indexTableSize)

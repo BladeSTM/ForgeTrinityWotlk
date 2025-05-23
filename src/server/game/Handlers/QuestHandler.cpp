@@ -33,7 +33,7 @@
 #include "QuestDef.h"
 #include "QuestPackets.h"
 #include "ScriptMgr.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "World.h"
@@ -107,8 +107,8 @@ void WorldSession::HandleQuestgiverHelloOpcode(WorldPacket& recvData)
 
     _player->PlayerTalkClass->ClearMenus();
 
-#ifdef ELUNA
-    if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetPlayer()->GetForge())
         if (e->OnGossipHello(_player, creature))
             return;
 #endif
@@ -336,8 +336,8 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket& recvData)
                         }
                     }
 
-#ifdef ELUNA
-                    if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+                    if (Forge* e = GetPlayer()->GetForge())
                         e->OnQuestReward(_player, questgiver, quest, reward);
 #endif
 
@@ -361,8 +361,8 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket& recvData)
                         }
                     }
 
-#ifdef ELUNA
-                    if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+                    if (Forge* e = GetPlayer()->GetForge())
                         e->OnQuestReward(_player, questGiver, quest, reward);
 #endif
 
@@ -456,8 +456,8 @@ void WorldSession::HandleQuestLogRemoveQuest(WorldPacket& recvData)
             _player->RemoveActiveQuest(questId);
             _player->RemoveTimedAchievement(ACHIEVEMENT_TIMED_TYPE_QUEST, questId);
 
-#ifdef ELUNA
-            if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetPlayer()->GetForge())
                 e->OnQuestAbandon(_player, questId);
 #endif
 

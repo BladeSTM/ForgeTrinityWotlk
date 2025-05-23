@@ -49,6 +49,6 @@ if(BUILD_TESTING)
   FetchContent_MakeAvailable(Catch2)
 endif()
 
-if (ELUNA)
+if (FORGE)
   add_subdirectory(lualib)
 endif()

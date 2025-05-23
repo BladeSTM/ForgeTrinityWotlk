@@ -42,7 +42,7 @@
 #include "Transport.h"
 #include "UpdateFieldFlags.h"
 #include "World.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include <G3D/Box.h>
@@ -230,8 +230,8 @@ void GameObject::AddToWorld()
         EnableCollision(toggledState);
         WorldObject::AddToWorld();
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
         {
             // one of these should really be deprecated, they serve the exact same purpose
             e->OnAddToWorld(this);
@@ -246,8 +246,8 @@ void GameObject::RemoveFromWorld()
     ///- Remove the gameobject from the accessor
     if (IsInWorld())
     {
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnRemoveFromWorld(this);
 #endif
         if (m_zoneScript)
@@ -470,13 +470,13 @@ bool GameObject::Create(ObjectGuid::LowType guidlow, uint32 name_id, Map* map, u
 
 void GameObject::Update(uint32 diff)
 {
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
     {
         e->UpdateAI(this, diff);
 
-        if (elunaEvents) // can be null on maps without eluna
-            elunaEvents->Update(diff);
+        if (forgeEvents) // can be null on maps without forge
+            forgeEvents->Update(diff);
     }
 #endif
     m_Events.Update(diff);
@@ -1650,8 +1650,8 @@ void GameObject::Use(Unit* user)
 
         playerUser->PlayerTalkClass->ClearMenus();
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             if (e->OnGossipHello(playerUser, this))
                 return;
 #endif
@@ -2471,8 +2471,8 @@ void GameObject::SetDestructibleState(GameObjectDestructibleState state, WorldOb
             break;
         case GO_DESTRUCTIBLE_DAMAGED:
         {
-#ifdef ELUNA
-            if (Eluna* e = GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetForge())
                 e->OnDamaged(this, attackerOrHealer);
 #endif
             EventInform(m_goInfo->building.damagedEvent, attackerOrHealer);
@@ -2500,8 +2500,8 @@ void GameObject::SetDestructibleState(GameObjectDestructibleState state, WorldOb
         }
         case GO_DESTRUCTIBLE_DESTROYED:
         {
-#ifdef ELUNA
-            if (Eluna* e = GetEluna())
+#ifdef FORGE
+            if (Forge* e = GetForge())
                 e->OnDestroyed(this, attackerOrHealer);
 #endif
             EventInform(m_goInfo->building.destroyedEvent, attackerOrHealer);
@@ -2559,8 +2559,8 @@ void GameObject::SetLootState(LootState state, Unit* unit)
     else
         m_lootStateUnitGUID.Clear();
 
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
         e->OnLootStateChanged(this, state);
 #endif
     AI()->OnLootStateChanged(state, unit);
@@ -2599,8 +2599,8 @@ void GameObject::SetLootGenerationTime()
 void GameObject::SetGoState(GOState state)
 {
     SetByteValue(GAMEOBJECT_BYTES_1, 0, state);
-#ifdef ELUNA
-    if (Eluna* e = GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetForge())
         e->OnGameObjectStateChanged(this, state);
 #endif
     if (AI())

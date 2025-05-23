@@ -43,9 +43,9 @@
 #include "StringConvert.h"
 #include "TemporarySummon.h"
 #include "Totem.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
-#include "ElunaConfig.h"
+#include "ForgeConfig.h"
 #endif
 #include "Transport.h"
 #include "Unit.h"
@@ -1824,14 +1824,14 @@ void WorldObject::SetMap(Map* map)
     m_currMap = map;
     m_mapId = map->GetId();
     m_InstanceId = map->GetInstanceId();
-#ifdef ELUNA
-    // in multistate mode, always reset in case Eluna is not active on the new map
-    if (elunaEvents && !sElunaConfig->IsElunaCompatibilityMode())
-        elunaEvents.reset();
+#ifdef FORGE
+    // in multistate mode, always reset in case Forge is not active on the new map
+    if (forgeEvents && !sForgeConfig->IsForgeCompatibilityMode())
+        forgeEvents.reset();
     
-    if (Eluna* e = map->GetEluna())
-        if (!elunaEvents)
-            elunaEvents = std::make_unique<ElunaEventProcessor>(e, this);
+    if (Forge* e = map->GetForge())
+        if (!forgeEvents)
+            forgeEvents = std::make_unique<ForgeEventProcessor>(e, this);
 #endif
     if (IsStoredInWorldObjectGridContainer())
        m_currMap->AddWorldObject(this);
@@ -3632,11 +3632,11 @@ std::string WorldObject::GetDebugInfo() const
     return sstr.str();
 }
 
-#ifdef ELUNA
-Eluna* WorldObject::GetEluna() const
+#ifdef FORGE
+Forge* WorldObject::GetForge() const
 {
     if (const Map * map = FindMap())
-        return map->GetEluna();
+        return map->GetForge();
 
     return nullptr;
 }

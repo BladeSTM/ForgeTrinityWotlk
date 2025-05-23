@@ -37,7 +37,7 @@
 #include "ReputationMgr.h"
 #include "ScriptMgr.h"
 #include "SpellInfo.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include "SpellMgr.h"
@@ -199,8 +199,8 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket& recvData)
     }
 
     _player->PlayerTalkClass->ClearMenus();
-#ifdef ELUNA
-    if (Eluna* e = GetPlayer()->GetEluna())
+#ifdef FORGE
+    if (Forge* e = GetPlayer()->GetForge())
         if (!e->OnGossipHello(_player, unit))
 #endif
     if (!unit->AI()->OnGossipHello(_player))

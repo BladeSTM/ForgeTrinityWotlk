@@ -32,7 +32,7 @@
 #include "Player.h"
 #include "World.h"
 #include "WorldPacket.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 
@@ -228,8 +228,8 @@ void WorldSession::HandleSendMail(WorldPackets::Mail::SendMail& sendMail)
             items.push_back(item);
         }
 
-#ifdef ELUNA
-        if (Eluna* e = player->GetEluna())
+#ifdef FORGE
+        if (Forge* e = player->GetForge())
         {
             if (!e->OnSendMail(player, receiverGuid))
             {

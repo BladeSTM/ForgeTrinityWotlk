@@ -53,7 +53,7 @@
 #include "Vehicle.h"
 #include "World.h"
 #include "WorldPacket.h"
-#ifdef ELUNA
+#ifdef FORGE
 #include "LuaEngine.h"
 #endif
 #include <G3D/g3dmath.h>
@@ -299,8 +299,8 @@ void Creature::AddToWorld()
         if (GetZoneScript())
             GetZoneScript()->OnCreatureCreate(this);
 
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnAddToWorld(this);
 #endif
     }
@@ -310,8 +310,8 @@ void Creature::RemoveFromWorld()
 {
     if (IsInWorld())
     {
-#ifdef ELUNA
-        if (Eluna* e = GetEluna())
+#ifdef FORGE
+        if (Forge* e = GetForge())
             e->OnRemoveFromWorld(this);
 #endif
         if (GetZoneScript())

@@ -272,7 +272,7 @@ INSERT INTO `locales_update` (`entry`, `name_loc6`, `name_loc7`, `description_lo
     (43145,'Vitela de armadura III','Vitela de armadura III','Se puede marcar como el objetivo de varios encantamientos de armadura para almacenar el encantamiento y usarlo más tarde. Solo puede absorber encantamientos con restricciones de nivel 60 o inferior.','Se puede marcar como el objetivo de varios encantamientos de armadura para almacenar el encantamiento y usarlo más tarde. Solo puede absorber encantamientos con restricciones de nivel 60 o inferior.'),
     (40121,'Circón majestuoso luciente','Circón majestuoso luciente','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
     (40010,'Zafiro celestial luciente','Zafiro celestial luciente','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
-    (24037,'Estrella de Eluna luciente','Estrella de Eluna luciente','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
+    (24037,'Estrella de Forge luciente','Estrella de Forge luciente','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
     (39927,'Calcedonia lustrosa','Calcedonia lustrosa','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
     (39920,'Calcedonia brillante','Calcedonia brillante','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
     (23121,'Piedra lunar azur luciente','Piedra lunar azur luciente','Encaja en una ranura de color azul.','Encaja en una ranura de color azul.'),
