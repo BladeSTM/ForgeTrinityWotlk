@@ -1,3 +1,6 @@
 [submodule "src/server/game/LuaEngine"]
 	path = src/server/game/LuaEngine
 	url = https://github.com/ForgeLua/Forge
+[submodule "sql/custom"]
+	path = sql/custom
+	url = git@github.com:BladeSTM/sql_custom.git
