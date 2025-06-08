@@ -478,8 +478,11 @@ void GameObject::Update(uint32 diff)
     {
         f->UpdateAI(this, diff);
 
-        if (forgeEvents) // can be null on maps without forge
-            forgeEvents->Update(diff);
+        if(forgeMapEvents) // can be null on maps without forge
+        forgeMapEvents->Update(diff);
+
+        if (forgeWorldEvents) // can be null on maps without forge
+            forgeWorldEvents->Update(diff);
     }
 #endif
     m_Events.Update(diff);

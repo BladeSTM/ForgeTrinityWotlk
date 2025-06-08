@@ -438,8 +438,11 @@ Unit::~Unit()
 void Unit::Update(uint32 p_time)
 {
 #ifdef FORGE
-    if(forgeEvents) // can be null on maps without forge
-        forgeEvents->Update(p_time);
+    if(forgeMapEvents) // can be null on maps without forge
+        forgeMapEvents->Update(p_time);
+
+    if (forgeWorldEvents) // can be null on maps without forge
+        forgeWorldEvents->Update(p_time);
 #endif
 
     // WARNING! Order of execution here is important, do not change.

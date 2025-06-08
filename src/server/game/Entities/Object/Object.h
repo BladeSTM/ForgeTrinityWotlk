@@ -569,8 +569,12 @@ class TC_GAME_API WorldObject : public Object, public WorldLocation
 
 #ifdef FORGE
         std::unique_ptr <ForgeEventProcessor> forgeEvents;
+        std::unique_ptr <ForgeEventProcessor> forgeMapEvents;
+        std::unique_ptr <ForgeEventProcessor> forgeWorldEvents;
 
         Forge* GetForge() const;
+
+        std::unique_ptr<ForgeEventProcessor>& GetForgeEvents(int32 mapId) { return (mapId == -1) ? forgeWorldEvents : forgeMapEvents; }
 
         LuaVal lua_data = LuaVal({});
 #endif

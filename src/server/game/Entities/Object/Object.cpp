@@ -1825,13 +1825,23 @@ void WorldObject::SetMap(Map* map)
     m_mapId = map->GetId();
     m_InstanceId = map->GetInstanceId();
 #ifdef FORGE
-    // in multistate mode, always reset in case Forge is not active on the new map
-    if (forgeEvents && !sForgeConfig->IsForgeCompatibilityMode())
-        forgeEvents.reset();
-    
-    if (Forge* f = map->GetForge())
-        if (!forgeEvents)
-            forgeEvents = std::make_unique<ForgeEventProcessor>(f, this);
+    if (!sForgeConfig->IsForgeCompatibilityMode())
+    {
+        auto& events = GetForgeEvents(m_mapId);
+        if (events)
+            events.reset();
+
+        if (Forge* f = map->GetForge())
+            events = std::make_unique<ForgeEventProcessor>(f, this);
+    }
+
+    // create the World events processor
+    if (Forge* f = sWorld->GetForge())
+    {
+        auto& events = GetForgeEvents(-1);
+        if (!events)
+            events = std::make_unique<ForgeEventProcessor>(f, this);
+    }
 #endif
     if (IsStoredInWorldObjectGridContainer())
        m_currMap->AddWorldObject(this);
